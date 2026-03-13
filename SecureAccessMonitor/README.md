@@ -1,18 +1,20 @@
 # Secure Access Monitor (Java + Docker)
 
+> A Java project simulating SIEM/SOAR/EDR workflows — detects repeated login failures and triggers automated incident responses. Built with Docker for portability.
+
 ### Overview
-Secure Access Monitor is a small Java application that simulates how modern cybersecurity systems detect and respond to suspicious activity.  
+Secure Access Monitor is a small Java application that simulates how modern cybersecurity systems detect and respond to suspicious activity.
 It was built to show practical understanding of core concepts like event logging, rule-based detection, and automated response — the same ideas behind SIEM, SOAR, and EDR tools used in real security operations.
 
 ### How It Works
 - The program logs simulated login events for a user and tracks failed attempts.
 - After five consecutive failed logins, it raises an alert for a possible brute-force attack.
 - Once triggered, it automatically locks the user account, blocks the IP address, and quarantines the endpoint.
-- All actions and events are printed to the console so you can clearly see what’s happening step by step.
+- All actions and events are printed to the console so you can clearly see what's happening step by step.
 
 ### Key Components
 | File | Purpose |
-|------|----------|
+|------|---------|
 | **Main.java** | Runs the simulation and prints results |
 | **EventLogger.java** | Records each login attempt (SIEM-style logging) |
 | **RuleEngine.java** | Checks for repeated failures and raises alerts |
@@ -22,8 +24,32 @@ It was built to show practical understanding of core concepts like event logging
 | **Dockerfile** | Containerizes the project for consistent execution |
 
 ### Run the Project
+
 #### Run locally
-```bash
 cd ~/Desktop/SecureAccessMonitor
 javac *.java
 java Main
+
+#### Run with Docker
+docker build -t secure-access-monitor .
+docker run secure-access-monitor
+
+### Expected Output
+[ALERT] Possible brute-force attack on user bj.parker from IP 10.0.0.42
+[ACTION] Locked user account: bj.parker
+[ACTION] Blocked IP address: 10.0.0.42
+[ACTION] Quarantined endpoint: laptop-001
+User locked? true
+IP blocked? true
+Endpoint quarantined? true
+
+### Author
+
+**Brian Parker**
+University of North Carolina at Charlotte
+B.S. Artificial Intelligence – Machine Learning Concentration
+bparke60@charlotte.edu
+
+### License
+This project is shared for educational and portfolio purposes.
+You may reference or adapt portions for personal learning projects.
