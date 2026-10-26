@@ -1,55 +1,37 @@
-# Secure Access Monitor (Java + Docker)
+# Secure Access Monitor — Java Security Event Simulation
 
-> A Java project simulating SIEM/SOAR/EDR workflows — detects repeated login failures and triggers automated incident responses. Built with Docker for portability.
+A Java learning project that models login-event monitoring, rule-based detection, and automated incident response. This is a **simulation**, not a production SIEM, SOAR, or EDR product.
 
-### Overview
-Secure Access Monitor is a small Java application that simulates how modern cybersecurity systems detect and respond to suspicious activity.
-It was built to show practical understanding of core concepts like event logging, rule-based detection, and automated response — the same ideas behind SIEM, SOAR, and EDR tools used in real security operations.
+## What it demonstrates
+- Java classes and domain models for security events and endpoints
+- Logging and evaluation of simulated login attempts
+- A rule that flags five consecutive failed logins
+- Simulated responses: account lock, IP block, and endpoint quarantine
+- Docker packaging for repeatable execution
 
-### How It Works
-- The program logs simulated login events for a user and tracks failed attempts.
-- After five consecutive failed logins, it raises an alert for a possible brute-force attack.
-- Once triggered, it automatically locks the user account, blocks the IP address, and quarantines the endpoint.
-- All actions and events are printed to the console so you can clearly see what's happening step by step.
+## Project components
+- `Main.java`: demonstration entry point
+- `EventLogger.java`: records events
+- `RuleEngine.java`: evaluates repeated failures
+- `IncidentResponder.java`: models response actions
+- `SecurityEvent.java`, `EventType.java`: event representations
+- `Endpoint.java`, `EndpointStatus.java`: endpoint state
+- `Dockerfile`: container build
 
-### Key Components
-| File | Purpose |
-|------|---------|
-| **Main.java** | Runs the simulation and prints results |
-| **EventLogger.java** | Records each login attempt (SIEM-style logging) |
-| **RuleEngine.java** | Checks for repeated failures and raises alerts |
-| **IncidentResponder.java** | Performs automatic actions (SOAR / EDR behavior) |
-| **SecurityEvent.java**, **EventType.java** | Define the event data structure |
-| **Endpoint.java**, **EndpointStatus.java** | Represent endpoint devices |
-| **Dockerfile** | Containerizes the project for consistent execution |
+## Run
+Clone the repository and enter the directory containing `Main.java` and the other Java source files. Then:
 
-### Run the Project
-
-#### Run locally
-cd ~/Desktop/SecureAccessMonitor
+```bash
 javac *.java
 java Main
+```
 
-#### Run with Docker
-docker build -t secure-access-monitor .
-docker run secure-access-monitor
+If Docker is installed, run `docker build -t secure-access-monitor .` from the directory containing the Dockerfile, then `docker run --rm secure-access-monitor`.
 
-### Expected Output
-[ALERT] Possible brute-force attack on user bj.parker from IP 10.0.0.42
-[ACTION] Locked user account: bj.parker
-[ACTION] Blocked IP address: 10.0.0.42
-[ACTION] Quarantined endpoint: laptop-001
-User locked? true
-IP blocked? true
-Endpoint quarantined? true
+## Demonstration
+The example models five consecutive failed sign-in attempts, followed by a brute-force alert and simulated account/IP/endpoint actions. Inspect the console output to trace each decision.
 
-### Author
+## Limitations and next improvements
+All events and responses are simulated; the app does not connect to live identity providers, block network traffic, or quarantine real devices. Potential extensions include unit tests for threshold and reset behavior, JSON event ingestion, configurable rules, and structured logs.
 
-**Brian Parker**
-University of North Carolina at Charlotte
-B.S. Artificial Intelligence – Machine Learning Concentration
-bparke60@charlotte.edu
-
-### License
-This project is shared for educational and portfolio purposes.
-You may reference or adapt portions for personal learning projects.
+**Author:** Brian Parker | B.S. Artificial Intelligence, UNC Charlotte
